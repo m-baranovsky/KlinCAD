@@ -34,8 +34,6 @@
 Join the community to follow the development, test early versions, or contribute:
 * **Discord:** [Permanent Invite Link] https://discord.gg/2A5P6KV3qA
 
-* ---
-
 ### 📚 Documentación Oficial / Official Documentation
 
 Puedes consultar y descargar los manuales técnicos completos de KlinCAD en el idioma de tu preferencia:
