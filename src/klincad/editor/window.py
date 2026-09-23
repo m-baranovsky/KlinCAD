@@ -655,6 +655,53 @@ class EditorCircuito(QMainWindow):
         self.btn_puntero.setText(t["pointer"])
         self.btn_wire.setText(t["track"])
         self.action_btn_componentes.setText(t["components"])
+
+        traducciones_componentes = {
+            "es": {
+                "Resistor": "Resistor",
+                "Capacitor": "Capacitor",
+                "Inductor / Bobina": "Inductor / Bobina",
+                "Diodo": "Diodo",
+                "Zener": "Zener",
+                "Transistor": "Transistor",
+                "Circuito Integrado": "Circuito Integrado",
+                "LED": "LED",
+                "Buzzer / Zumbador": "Buzzer / Zumbador",
+                "Display 7 Segmentos": "Display de 7 Segmentos",
+                "Pulsador / Push Button": "Pulsador",
+                "Interruptor / Switch": "Interruptor",
+                "Batería / Pila": "Batería / Pila",
+                "Terminal Alimentación": "Terminal de Alimentación",
+                "Conector de Placa": "Conector de Placa",
+                "Agujero de Montaje": "Agujero de Montaje",
+            },
+            "en": {
+                "Resistor": "Resistor",
+                "Capacitor": "Capacitor",
+                "Inductor / Bobina": "Inductor / Coil",
+                "Diodo": "Diode",
+                "Zener": "Zener",
+                "Transistor": "Transistor",
+                "Circuito Integrado": "Integrated Circuit",
+                "LED": "LED",
+                "Buzzer / Zumbador": "Buzzer",
+                "Display 7 Segmentos": "7-Segment Display",
+                "Pulsador / Push Button": "Push Button",
+                "Interruptor / Switch": "Switch",
+                "Batería / Pila": "Battery",
+                "Terminal Alimentación": "Power Terminal",
+                "Conector de Placa": "Board Connector",
+                "Agujero de Montaje": "Mounting Hole",
+            },
+        }
+
+        for cat, submenu in self._menus_componentes.items():
+            submenu.setTitle(
+                traducciones_componentes[self.lang].get(cat, cat)
+            )
+
+        self.accion_nodo.setText(t["node"])
+        self.accion_malla.setText(t["mesh"])
         
         self.accion_nodo.setText(t["node"])
         self.accion_malla.setText(t["mesh"])
