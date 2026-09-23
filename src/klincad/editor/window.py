@@ -138,39 +138,30 @@ class EditorCircuito(QMainWindow):
     # Los atajos se mantienen centralizados para evitar conexiones dispersas.
     # Las combinaciones X+1..X+4 seleccionan directamente una capa de pista.
     def configurar_atajos(self):
-        """Registra atajos sin acoplar la lógica a teclados físicos."""
+        """
+        La gestión de teclado se centraliza en eventFilter.
+
+        Evitamos depender de QShortcut para los atajos principales porque
+        así el comportamiento es uniforme entre Windows y Linux y podemos
+        capturar errores sin terminar silenciosamente la aplicación.
+        """
         self._shortcuts.clear()
-        atajos = [
-            ("Ctrl+C", self.copiar_seleccion),
-            ("Ctrl+V", self.pegar_seleccion),
-            ("Ctrl+X", self.cortar_seleccion),
-            ("Ctrl+Z", self.deshacer),
-            ("Ctrl+Y", self.rehacer),
-            ("Ctrl+S", self.guardar_proyecto),
-            ("R", self.rotar_seleccion),
-            ("Esc", self.set_modo_puntero),
-            ("Delete", self.eliminar_seleccion),
-            ("Backspace", self.eliminar_seleccion),
-        ]
-        for secuencia, callback in atajos:
-            shortcut = QShortcut(QKeySequence(secuencia), self)
-            shortcut.activated.connect(callback)
-            self._shortcuts.append(shortcut)
 
-        # X+1..4 se gestiona directamente en eventFilter para evitar
-        # conflictos con QKeySequence en distintos teclados/layouts.
 
-        # A abre directamente el menú desplegable de componentes.
-        componentes_short = QShortcut(
-            QKeySequence("A"),
-            self
-        )
-        componentes_short.setContext(Qt.ApplicationShortcut)
-        componentes_short.setAutoRepeat(False)
-        componentes_short.activated.connect(
-            self.mostrar_menu_componentes_atajo
-        )
-        self._shortcuts.append(componentes_short)
+    def _ejecutar_atajo_seguro(self, callback):
+        """
+        Ejecuta un atajo evitando que una excepción cierre silenciosamente
+        la aplicación empaquetada.
+        """
+        try:
+            callback()
+        except Exception as exc:
+            QMessageBox.critical(
+                self,
+                "Error en atajo de teclado",
+                f"No se pudo ejecutar la acción solicitada.\n\n"
+                f"{type(exc).__name__}: {exc}"
+            )
 
     # Cambia la capa activa y deja la herramienta Pista preparada para dibujar.
     def seleccionar_capa(self, nombre_capa):
