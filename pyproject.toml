@@ -1,1 +1,33 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
 
+[project]
+name = "klincad"
+version = "0.1.0"
+description = "Editor de circuitos PCB ligero y modular desarrollado con PyQt5"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { file = "LICENSE" }
+
+dependencies = [
+    "PyQt5>=5.15"
+]
+
+[project.optional-dependencies]
+test = [
+    "pytest>=7.0"
+]
+
+[project.scripts]
+klincad = "klincad.app:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
