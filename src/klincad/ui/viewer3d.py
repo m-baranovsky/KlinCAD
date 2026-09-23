@@ -4,13 +4,12 @@
 
 import math
 
-from PyQt5.QtCore import QPoint, QPointF, Qt
+from PyQt5.QtCore import QPoint, QPointF, QRectF, Qt
 from PyQt5.QtGui import QBrush, QColor, QPainter, QPen, QPolygonF
 from PyQt5.QtWidgets import QWidget, QVBoxLayout
 
 from klincad.items.component import ComponenteLiviano
 from klincad.items.track import PistaInteractiva
-
 
 # -----------------------------------------------------------------------------
 # Renderizador 2.5D.
