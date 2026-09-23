@@ -1,48 +1,98 @@
 # KlinCAD ⚡
 
-> An intuitive EDA tool designed for high school students and beginners to build their first circuits and PCBs.
+> An intuitive open-source EDA tool designed for high school students, technical schools, and electronics beginners.
 
----
+KlinCAD is a lightweight Electronic Design Automation (EDA) application focused on education. It provides a clean and approachable environment for learning electronics by designing, routing, and visualizing circuits and PCBs without the steep learning curve of professional EDA suites.
 
-### English
+## ✨ Features
 
-**KlinCAD** is a lightweight Electronic Design Automation (EDA) software tailored for education. It provides a clean, friction-free environment for students and beginners to learn electronics by designing, routing, and visualizing their very first circuits and PCBs without the steep learning curve of professional suites.
+- Intuitive component selection
+- PCB design and routing
+- Multi-layer board support
+- Interactive editing environment
+- Educational workflow focused on beginners
+- Spanish and English interface
+- Project saving and loading
+- Export capabilities
+- Design-rule checking tools
+- Continuous development and improvement
 
-* **Target Audience:** High school students, technical schools, and electronics beginners.
-* **Key Features:** Clean component selection, multi-layer board support, and an intuitive UI.
+## 🎓 Target audience
 
----
+KlinCAD is designed for:
+
+- High school students
+- Technical and vocational schools
+- Electronics students
+- Teachers and educators
+- Electronics beginners
+
+## 🌎 Languages
+
+KlinCAD currently supports:
+
+- 🇪🇸 Spanish
+- 🇬🇧 English
+
+## 📚 Documentation
 
 ### Español
 
-**KlinCAD** es un software de Automatización de Diseño Electrónico (EDA) ligero y orientado a la educación. Ofrece un entorno limpio y sin fricciones para que estudiantes y principiantes aprendan electrónica diseñando, ruteando y visualizando sus primeros circuitos y PCBs sin la curva de aprendizaje abrumadora de las herramientas profesionales.
+- [Manual de usuario](docs/manual_es.md)
+- [Arquitectura del proyecto](docs/arquitectura.md)
 
-* **Público objetivo:** Estudiantes de secundaria, escuelas técnicas y principiantes en electrónica.
-* **Características clave:** Selección limpia de componentes, soporte de múltiples capas y una interfaz intuitiva.
+### English
 
----
+- [User Manual](docs/manual_en.md)
 
-### Status / Estado
+> Additional documentation and downloadable PDF manuals will be published as they become available.
 
-* **English:** Under active, continuous development. Expect frequent updates, new features, and improvements based on community and user feedback.
-* **Español:** En desarrollo activo y continuo. Se esperan actualizaciones frecuentes, nuevas funciones y mejoras basadas en el feedback de los usuarios.
+## 📦 Download
 
----
+The Windows application is distributed through GitHub Releases.
 
-### Community / Comunidad
+➡️ [Download KlinCAD](../../releases)
 
-Join the community to follow the development, test early versions, or contribute:
-* **Discord:** [Permanent Invite Link] https://discord.gg/2A5P6KV3qA
+Source code is available directly in this repository.
 
-### 📚 Documentación Oficial / Official Documentation
+## 🚧 Project status
 
-Puedes consultar y descargar los manuales técnicos completos de KlinCAD en el idioma de tu preferencia:
+**KlinCAD is under active development.**
 
-<div align="center">
+The project is evolving continuously, with new features, improvements, fixes, and educational resources being added over time.
 
-| Idioma / Language | Enlace de Descarga PDF |
-| :--- | :---: |
-| 🇪🇸 **Español** | [📥 Descargar Manual en Español](docs/es/manual_es.pdf) |
-| 🇬🇧 **English** | [📥 Download English Manual](docs/en/manual_en.pdf) |
+Early releases may contain bugs or incomplete functionality.
 
-</div>
+## 🤝 Community
+
+Follow the development, test early versions, report problems, or contribute to the project.
+
+### Discord
+
+[Join the KlinCAD Discord community](https://discord.gg/2A5P6KV3qA)
+
+## 🛠️ Development
+
+KlinCAD is developed as an open-source project using Python and PyQt5.
+
+The repository is organized into modular components to make the project easier to maintain, test, and contribute to.
+
+See [Desarrollo](docs/desarrollo.md) for development guidelines.
+
+## 📄 License
+
+KlinCAD is distributed under the **GNU General Public License v3.0**.
+
+See the [LICENSE](LICENSE) file for the complete license text.
+
+## ⚖️ Third-party software
+
+KlinCAD uses third-party open-source software, including PyQt5 and Qt.
+
+Each dependency remains subject to its own license and copyright terms.
+
+## 🙌 Contributing
+
+Contributions, bug reports, suggestions, documentation improvements, and educational feedback are welcome.
+
+Please use GitHub Issues or the project's Discord community to participate.
