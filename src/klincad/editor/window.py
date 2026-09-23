@@ -468,18 +468,67 @@ class EditorCircuito(QMainWindow):
     # Punto central para atajos/secuencias que no son fiables como QShortcut,
     # especialmente X+1..X+4. Mantener aquí la lógica evita conflictos de foco.
     def eventFilter(self, obj, event):
-        # Atajos de capa: X + 1..4.
-        # La tecla X por sí sola NO hace nada.
         if event.type() == QEvent.KeyPress:
             key = event.key()
             modifiers = event.modifiers()
 
-            # No interceptar escritura dentro de campos de texto/combo.
             foco = QApplication.focusWidget()
+
+            # No interceptar teclas mientras se escribe en un control de texto.
             es_editor_texto = isinstance(
                 foco,
                 (QLineEdit, QTextEdit, QComboBox)
             )
+
+            # No capturar teclas mientras haya un diálogo modal abierto.
+            ventana_modal = QApplication.activeModalWidget()
+            if ventana_modal is not None and ventana_modal is not self:
+                return super().eventFilter(obj, event)
+
+            # ============================================================
+            # ATAJOS Ctrl + tecla
+            # ============================================================
+
+            if not es_editor_texto and modifiers == Qt.ControlModifier:
+                atajos_ctrl = {
+                    Qt.Key_C: self.copiar_seleccion,
+                    Qt.Key_V: self.pegar_seleccion,
+                    Qt.Key_X: self.cortar_seleccion,
+                    Qt.Key_Z: self.deshacer,
+                    Qt.Key_Y: self.rehacer,
+                    Qt.Key_S: self.guardar_proyecto,
+                }
+
+                callback = atajos_ctrl.get(key)
+
+                if callback is not None:
+                    self._ejecutar_atajo_seguro(callback)
+                    event.accept()
+                    return True
+
+            # ============================================================
+            # ATAJOS DE UNA SOLA TECLA
+            # ============================================================
+
+            if not es_editor_texto and modifiers == Qt.NoModifier:
+                atajos_directos = {
+                    Qt.Key_R: self.rotar_seleccion,
+                    Qt.Key_Escape: self.set_modo_puntero,
+                    Qt.Key_Delete: self.eliminar_seleccion,
+                    Qt.Key_Backspace: self.eliminar_seleccion,
+                    Qt.Key_A: self.mostrar_menu_componentes_atajo,
+                }
+
+                callback = atajos_directos.get(key)
+
+                if callback is not None:
+                    self._ejecutar_atajo_seguro(callback)
+                    event.accept()
+                    return True
+
+            # ============================================================
+            # X + 1..4 PARA SELECCIÓN DE CAPA
+            # ============================================================
 
             if (
                 self.proyecto_activo
@@ -509,11 +558,15 @@ class EditorCircuito(QMainWindow):
                 }
 
                 self._capa_shortcut_pendiente = False
-                self.seleccionar_capa(capas[key])
+
+                self._ejecutar_atajo_seguro(
+                    lambda: self.seleccionar_capa(capas[key])
+                )
+
                 event.accept()
                 return True
 
-            # Una tecla distinta rompe la secuencia pendiente.
+            # Una tecla distinta rompe la secuencia X + número.
             if getattr(self, "_capa_shortcut_pendiente", False):
                 self._capa_shortcut_pendiente = False
 
@@ -527,6 +580,7 @@ class EditorCircuito(QMainWindow):
                     cercano = self.scene.buscar_terminal_cercano(snapped_pos)
                     start_pos = cercano if cercano else snapped_pos
                     self.puntero_inicio = start_pos
+
                     self.linea_temporal = PistaInteractiva(
                         start_pos.x(),
                         start_pos.y(),
@@ -534,20 +588,24 @@ class EditorCircuito(QMainWindow):
                         start_pos.y(),
                         self.capa_activa
                     )
+
                     self.scene.addItem(self.linea_temporal)
                     return True
 
             elif event.type() == QEvent.MouseMove and self.modo_linea and self.linea_temporal:
                 pos = self.view.mapToScene(event.pos())
                 snapped_pos = snap_to_grid(pos)
+
                 cercano = self.scene.buscar_terminal_cercano(
                     snapped_pos,
                     ignorar_item=self.linea_temporal
                 )
+
                 end_pos = cercano if cercano else snapped_pos
                 linea = self.linea_temporal.line()
                 linea.setP2(end_pos)
                 self.linea_temporal.setLine(linea)
+
                 return True
 
             elif event.type() == QEvent.MouseButtonRelease and event.button() == Qt.LeftButton:
@@ -557,9 +615,11 @@ class EditorCircuito(QMainWindow):
                     else:
                         self.linea_temporal.actualizar_posicion_handles()
                         self.scene.actualizar_indicadores_conexion()
+
                     self.linea_temporal = None
                     self.puntero_inicio = None
                     self.registrar_accion_fin()
+
                     return True
 
         return super().eventFilter(obj, event)
