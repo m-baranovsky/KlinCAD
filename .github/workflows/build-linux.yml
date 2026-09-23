@@ -19,8 +19,8 @@ jobs:
       - name: Instalar KlinCAD
         run: pip install -e .
 
-      - name: Instalar PyInstaller
-        run: pip install pyinstaller
+      - name: Instalar PyInstaller y Pillow
+        run: pip install pyinstaller pillow
 
       - name: Verificar imports
         run: |
@@ -36,14 +36,68 @@ jobs:
           --name KlinCAD
           src/klincad/app.py
 
+      - name: Preparar distribución Linux
+        run: |
+          mkdir -p dist/KlinCAD-Linux
+
+          cp dist/KlinCAD dist/KlinCAD-Linux/KlinCAD
+
+          python - <<'PY'
+          from PIL import Image
+
+          img = Image.open("assets/icons/klincad.ico")
+          img = img.convert("RGBA")
+          img.save("dist/KlinCAD-Linux/klincad.png")
+          PY
+
+          cat > dist/KlinCAD-Linux/install.sh <<'EOF'
+          #!/bin/bash
+          set -e
+
+          BIN_DIR="$HOME/.local/bin"
+          ICON_DIR="$HOME/.local/share/icons/hicolor/256x256/apps"
+          DESKTOP_DIR="$HOME/.local/share/applications"
+
+          mkdir -p "$BIN_DIR"
+          mkdir -p "$ICON_DIR"
+          mkdir -p "$DESKTOP_DIR"
+
+          cp KlinCAD "$BIN_DIR/KlinCAD"
+          cp klincad.png "$ICON_DIR/klincad.png"
+
+          chmod +x "$BIN_DIR/KlinCAD"
+
+          cat > "$DESKTOP_DIR/KlinCAD.desktop" <<DESKTOP
+          [Desktop Entry]
+          Version=1.0
+          Type=Application
+          Name=KlinCAD
+          Comment=Electronic Design Automation and PCB design
+          Exec=$BIN_DIR/KlinCAD
+          Icon=$ICON_DIR/klincad.png
+          Terminal=false
+          Categories=Development;Education;Engineering;
+          DESKTOP
+
+          chmod +x "$DESKTOP_DIR/KlinCAD.desktop"
+
+          if command -v update-desktop-database >/dev/null 2>&1; then
+              update-desktop-database "$DESKTOP_DIR" || true
+          fi
+
+          echo "KlinCAD instalado correctamente."
+          echo "Ejecutable: $BIN_DIR/KlinCAD"
+          echo "Menú: $DESKTOP_DIR/KlinCAD.desktop"
+          EOF
+
+          chmod +x dist/KlinCAD-Linux/install.sh
+
       - name: Generar SHA-256
         run: |
-          sha256sum dist/KlinCAD > dist/KlinCAD.sha256
+          sha256sum dist/KlinCAD-Linux/KlinCAD > dist/KlinCAD-Linux/KlinCAD.sha256
 
-      - name: Guardar ejecutable
+      - name: Guardar distribución Linux
         uses: actions/upload-artifact@v4
         with:
           name: KlinCAD-Linux-x86_64
-          path: |
-            dist/KlinCAD
-            dist/KlinCAD.sha256
+          path: dist/KlinCAD-Linux/
