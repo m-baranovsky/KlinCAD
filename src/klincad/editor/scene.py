@@ -153,13 +153,15 @@ class EscenaDotGrid(QGraphicsScene):
                 item.update()
 
         self.update()
-
+        
     def set_idioma(self, lang):
         self.lang = lang
 
         for item in self.items():
             if isinstance(item, ComponenteLiviano):
                 item.actualizar_tooltip()
+                item.actualizar_texto_etiqueta()
+                item.update()
 
     def buscar_terminal_cercano(self, pos, ignorar_item=None):
         rect_busqueda = QRectF(
