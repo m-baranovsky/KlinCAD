@@ -281,13 +281,56 @@ class ComponenteLiviano(QGraphicsRectItem, BaseItemRotable):
             )
 
     def actualizar_texto_etiqueta(self):
-        self.label.setPlainText(
-            f"{self.ref_id}: {self.tipo}\n{self.valor}"
+        traducciones = {
+            "es": {
+                "Resistor": "Resistor",
+                "Capacitor": "Capacitor",
+                "Inductor / Bobina": "Inductor / Bobina",
+                "Diodo": "Diodo",
+                "Zener": "Zener",
+                "Transistor": "Transistor",
+                "Circuito Integrado": "Circuito Integrado",
+                "LED": "LED",
+                "Buzzer / Zumbador": "Buzzer / Zumbador",
+                "Display 7 Segmentos": "Display de 7 Segmentos",
+                "Pulsador / Push Button": "Pulsador",
+                "Interruptor / Switch": "Interruptor",
+                "Batería / Pila": "Batería / Pila",
+                "Terminal Alimentación": "Terminal de Alimentación",
+                "Conector de Placa": "Conector de Placa",
+                "Agujero de Montaje": "Agujero de Montaje",
+            },
+            "en": {
+                "Resistor": "Resistor",
+                "Capacitor": "Capacitor",
+                "Inductor / Bobina": "Inductor / Coil",
+                "Diodo": "Diode",
+                "Zener": "Zener",
+                "Transistor": "Transistor",
+                "Circuito Integrado": "Integrated Circuit",
+                "LED": "LED",
+                "Buzzer / Zumbador": "Buzzer",
+                "Display 7 Segmentos": "7-Segment Display",
+                "Pulsador / Push Button": "Push Button",
+                "Interruptor / Switch": "Switch",
+                "Batería / Pila": "Battery",
+                "Terminal Alimentación": "Power Terminal",
+                "Conector de Placa": "Board Connector",
+                "Agujero de Montaje": "Mounting Hole",
+            },
+        }
+
+        lang = getattr(self.scene(), "lang", "es") if self.scene() else "es"
+        tipo_mostrado = traducciones.get(lang, traducciones["es"]).get(
+            self.tipo,
+            self.tipo
         )
 
-        self.label.setFont(
-            QFont("sans-serif", 9, QFont.Bold)
+        self.label.setPlainText(
+            f"{self.ref_id}: {tipo_mostrado}\n{self.valor}"
         )
+
+        self.label.setFont(QFont("sans-serif", 9, QFont.Bold))
 
         modo_oscuro = (
             getattr(self.scene(), "modo_oscuro", False)
@@ -295,37 +338,21 @@ class ComponenteLiviano(QGraphicsRectItem, BaseItemRotable):
             else False
         )
 
-        color_texto = (
-            QColor("#ffffff")
-            if modo_oscuro
-            else QColor("#000000")
-        )
-
-        color_pin = (
-            QColor("#67e8f9")
-            if modo_oscuro
-            else QColor("#0369a1")
-        )
+        color_texto = QColor("#ffffff") if modo_oscuro else QColor("#000000")
+        color_pin = QColor("#67e8f9") if modo_oscuro else QColor("#0369a1")
 
         self.label.setDefaultTextColor(color_texto)
 
-        for pin, lbl in zip(
-            self.pines_logicos,
-            self.pin_labels,
-        ):
+        for pin, lbl in zip(self.pines_logicos, self.pin_labels):
             lbl.setPlainText(pin.nombre)
-            lbl.setFont(
-                QFont("sans-serif", 9, QFont.Bold)
-            )
+            lbl.setFont(QFont("sans-serif", 9, QFont.Bold))
             lbl.setDefaultTextColor(color_pin)
-
             self._posicionar_etiqueta_pin(
                 lbl,
                 pin,
                 self.rect().width(),
-                self.rect().height(),
+                self.rect().height()
             )
-
             lbl.setZValue(35)
 
     def obtener_puntos_conexion(self):
