@@ -2,8 +2,14 @@
 # KlinCAD - Design Rule Check (DRC)
 # =============================================================================
 
-from PyQt5.QtCore import QLineF, QThread, QVBoxLayout, QHBoxLayout, pyqtSignal, QObject
-from PyQt5.QtWidgets import QDialog, QLabel, QPushButton
+from PyQt5.QtCore import QLineF, QObject, QThread, pyqtSignal
+from PyQt5.QtWidgets import (
+    QDialog,
+    QHBoxLayout,
+    QLabel,
+    QPushButton,
+    QVBoxLayout,
+)
 
 from klincad.config import SNAP_THRESHOLD
 
