@@ -699,6 +699,127 @@ class EditorCircuito(QMainWindow):
             submenu.setTitle(
                 traducciones_componentes[self.lang].get(cat, cat)
             )
+                    traducciones_valores = {
+            "es": {
+                "LED Rojo": "LED Rojo",
+                "LED Verde": "LED Verde",
+                "LED Azul": "LED Azul",
+                "LED Amarillo": "LED Amarillo",
+                "LED Blanco": "LED Blanco",
+
+                "Activo 5V": "Activo 5V",
+                "Activo 12V": "Activo 12V",
+                "Pasivo": "Pasivo",
+
+                "Cátodo Común": "Cátodo Común",
+                "Ánodo Común": "Ánodo Común",
+
+                "Normal Abierto (NO)": "Normal Abierto (NO)",
+
+                "Deslizante SPDT (1 polo, 2 tiros)":
+                    "Deslizante SPDT (1 polo, 2 tiros)",
+
+                "Pila 1.5V (AA/AAA)": "Pila 1.5V (AA/AAA)",
+                "Batería 9V": "Batería 9V",
+                "Pack 5V (USB)": "Pack 5V (USB)",
+                "Li-ion 3.7V": "Li-ion 3.7V",
+
+                "GND (Tierra)": "GND (Tierra)",
+
+                "Clema de tornillo (2 pines)":
+                    "Clema de tornillo (2 pines)",
+
+                "Pin Header macho (1x2)":
+                    "Pin Header macho (1x2)",
+
+                "Pin Header macho (1x4)":
+                    "Pin Header macho (1x4)",
+
+                "M2.5": "M2.5",
+                "M3": "M3",
+                "M4": "M4",
+
+                "BC547 (NPN genérico)":
+                    "BC547 (NPN genérico)",
+
+                "BC557 (PNP genérico)":
+                    "BC557 (PNP genérico)",
+
+                "NE555 (Temporizador)":
+                    "NE555 (Temporizador)",
+
+                "LM7805 (Regulador 5V)":
+                    "LM7805 (Regulador 5V)",
+
+                "ATmega328P (Micro)":
+                    "ATmega328P (Micro)",
+            },
+
+            "en": {
+                "LED Rojo": "Red LED",
+                "LED Verde": "Green LED",
+                "LED Azul": "Blue LED",
+                "LED Amarillo": "Yellow LED",
+                "LED Blanco": "White LED",
+
+                "Activo 5V": "Active 5V",
+                "Activo 12V": "Active 12V",
+                "Pasivo": "Passive",
+
+                "Cátodo Común": "Common Cathode",
+                "Ánodo Común": "Common Anode",
+
+                "Normal Abierto (NO)": "Normally Open (NO)",
+
+                "Deslizante SPDT (1 polo, 2 tiros)":
+                    "SPDT Slide Switch (1 pole, 2 throws)",
+
+                "Pila 1.5V (AA/AAA)": "1.5V Battery (AA/AAA)",
+                "Batería 9V": "9V Battery",
+                "Pack 5V (USB)": "5V Pack (USB)",
+                "Li-ion 3.7V": "Li-ion 3.7V",
+
+                "GND (Tierra)": "GND (Ground)",
+
+                "Clema de tornillo (2 pines)":
+                    "Screw Terminal (2 pins)",
+
+                "Pin Header macho (1x2)":
+                    "Male Pin Header (1x2)",
+
+                "Pin Header macho (1x4)":
+                    "Male Pin Header (1x4)",
+
+                "M2.5": "M2.5",
+                "M3": "M3",
+                "M4": "M4",
+
+                "BC547 (NPN genérico)":
+                    "BC547 (generic NPN)",
+
+                "BC557 (PNP genérico)":
+                    "BC557 (generic PNP)",
+
+                "NE555 (Temporizador)":
+                    "NE555 (Timer)",
+
+                "LM7805 (Regulador 5V)":
+                    "LM7805 (5V Regulator)",
+
+                "ATmega328P (Micro)":
+                    "ATmega328P (Microcontroller)",
+            },
+        }
+
+        traducciones_actuales = traducciones_valores.get(
+            self.lang,
+            traducciones_valores["es"]
+        )
+
+        for (cat, valor), accion in self._acciones_valores_componentes.items():
+            accion.setText(
+                traducciones_actuales.get(valor, valor)
+            )
 
         self.accion_nodo.setText(t["node"])
         self.accion_malla.setText(t["mesh"])
@@ -1015,6 +1136,7 @@ class EditorCircuito(QMainWindow):
         }
 
         self._menus_componentes = {}
+        self._acciones_valores_componentes = {}
 
         for cat, valores in VALORES_POR_COMPONENTE.items():
             texto_cat = traducciones_componentes[self.lang].get(cat, cat)
@@ -1023,11 +1145,15 @@ class EditorCircuito(QMainWindow):
 
             for v in valores:
                 accion = QAction(v, self)
+
                 accion.triggered.connect(
                     lambda checked, c=cat, val=v:
                     self.agregar_componente(c, val)
                 )
+
                 sub.addAction(accion)
+
+                self._acciones_valores_componentes[(cat, v)] = accion
 
             self.menu_componentes.addMenu(sub)
             self._menus_componentes[cat] = sub
