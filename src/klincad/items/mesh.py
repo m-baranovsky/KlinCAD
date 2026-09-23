@@ -4,11 +4,14 @@
 
 from PyQt5.QtCore import QPointF, Qt
 from PyQt5.QtGui import QBrush, QColor, QPen
-from PyQt5.QtWidgets import QGraphicsRectItem, QGraphicsTextItem, QGraphicsItem
+from PyQt5.QtWidgets import (
+    QGraphicsItem,
+    QGraphicsRectItem,
+    QGraphicsTextItem,
+)
 
 from klincad.items.component import BaseItemRotable
 from klincad.utils.geometry import snap_to_grid
-
 
 class Malla(QGraphicsRectItem, BaseItemRotable):
     def __init__(self, x, y):
