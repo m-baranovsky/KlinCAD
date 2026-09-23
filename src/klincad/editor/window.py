@@ -926,9 +926,54 @@ class EditorCircuito(QMainWindow):
         self.action_btn_componentes.setPopupMode(QToolButton.InstantPopup)
         self.action_btn_componentes.setStyleSheet(estilo_sin_flecha)
 
-        menu_componentes = QMenu(self)
+        self.menu_componentes = QMenu(self)
+
+        traducciones_componentes = {
+            "es": {
+                "Resistor": "Resistor",
+                "Capacitor": "Capacitor",
+                "Inductor / Bobina": "Inductor / Bobina",
+                "Diodo": "Diodo",
+                "Zener": "Zener",
+                "Transistor": "Transistor",
+                "Circuito Integrado": "Circuito Integrado",
+                "LED": "LED",
+                "Buzzer / Zumbador": "Buzzer / Zumbador",
+                "Display 7 Segmentos": "Display de 7 Segmentos",
+                "Pulsador / Push Button": "Pulsador",
+                "Interruptor / Switch": "Interruptor",
+                "Batería / Pila": "Batería / Pila",
+                "Terminal Alimentación": "Terminal de Alimentación",
+                "Conector de Placa": "Conector de Placa",
+                "Agujero de Montaje": "Agujero de Montaje",
+            },
+            "en": {
+                "Resistor": "Resistor",
+                "Capacitor": "Capacitor",
+                "Inductor / Bobina": "Inductor / Coil",
+                "Diodo": "Diode",
+                "Zener": "Zener",
+                "Transistor": "Transistor",
+                "Circuito Integrado": "Integrated Circuit",
+                "LED": "LED",
+                "Buzzer / Zumbador": "Buzzer",
+                "Display 7 Segmentos": "7-Segment Display",
+                "Pulsador / Push Button": "Push Button",
+                "Interruptor / Switch": "Switch",
+                "Batería / Pila": "Battery",
+                "Terminal Alimentación": "Power Terminal",
+                "Conector de Placa": "Board Connector",
+                "Agujero de Montaje": "Mounting Hole",
+            },
+        }
+
+        self._menus_componentes = {}
+
         for cat, valores in VALORES_POR_COMPONENTE.items():
-            sub = QMenu(cat, self)
+            texto_cat = traducciones_componentes[self.lang].get(cat, cat)
+
+            sub = QMenu(texto_cat, self)
+
             for v in valores:
                 accion = QAction(v, self)
                 accion.triggered.connect(
@@ -936,14 +981,22 @@ class EditorCircuito(QMainWindow):
                     self.agregar_componente(c, val)
                 )
                 sub.addAction(accion)
-            menu_componentes.addMenu(sub)
 
-        menu_componentes.addSeparator()
-        self.accion_nodo = QAction(self, triggered=self.agregar_nodo)
-        self.accion_malla = QAction(self, triggered=self.agregar_malla)
-        menu_componentes.addAction(self.accion_nodo)
-        menu_componentes.addAction(self.accion_malla)
-        self.action_btn_componentes.setMenu(menu_componentes)
+            self.menu_componentes.addMenu(sub)
+            self._menus_componentes[cat] = sub
+
+        self.menu_componentes.addSeparator()
+
+        self.accion_nodo = QAction(self)
+        self.accion_nodo.triggered.connect(self.agregar_nodo)
+
+        self.accion_malla = QAction(self)
+        self.accion_malla.triggered.connect(self.agregar_malla)
+
+        self.menu_componentes.addAction(self.accion_nodo)
+        self.menu_componentes.addAction(self.accion_malla)
+
+        self.action_btn_componentes.setMenu(self.menu_componentes)
         tb.addWidget(self.action_btn_componentes)
 
     def set_modo_pista(self):
