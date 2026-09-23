@@ -281,7 +281,7 @@ class ComponenteLiviano(QGraphicsRectItem, BaseItemRotable):
             )
 
     def actualizar_texto_etiqueta(self):
-        traducciones = {
+        traducciones_tipo = {
             "es": {
                 "Resistor": "Resistor",
                 "Capacitor": "Capacitor",
@@ -320,17 +320,198 @@ class ComponenteLiviano(QGraphicsRectItem, BaseItemRotable):
             },
         }
 
-        lang = getattr(self.scene(), "lang", "es") if self.scene() else "es"
-        tipo_mostrado = traducciones.get(lang, traducciones["es"]).get(
+        traducciones_valor = {
+            "es": {
+                "100 Ω": "100 Ω",
+                "220 Ω": "220 Ω",
+                "330 Ω": "330 Ω",
+                "1 KΩ": "1 KΩ",
+                "2.2 KΩ": "2.2 KΩ",
+                "4.7 KΩ": "4.7 KΩ",
+                "10 KΩ": "10 KΩ",
+                "47 KΩ": "47 KΩ",
+                "100 KΩ": "100 KΩ",
+
+                "10 pF": "10 pF",
+                "100 pF": "100 pF",
+                "1 nF": "1 nF",
+                "10 nF": "10 nF",
+                "100 nF": "100 nF",
+                "1 uF": "1 uF",
+                "10 uF": "10 uF",
+                "100 uF": "100 uF",
+
+                "10 μH": "10 μH",
+                "100 μH": "100 μH",
+                "1 mH": "1 mH",
+
+                "1N4148": "1N4148",
+                "1N4001": "1N4001",
+                "1N4007": "1N4007",
+                "1N5819": "1N5819",
+
+                "Zener 3.3V": "Zener 3.3V",
+                "Zener 5.1V": "Zener 5.1V",
+                "Zener 9.1V": "Zener 9.1V",
+                "Zener 12V": "Zener 12V",
+
+                "BC547 (NPN genérico)": "BC547 (NPN genérico)",
+                "BC557 (PNP genérico)": "BC557 (PNP genérico)",
+                "2N2222": "2N2222",
+                "2N3904": "2N3904",
+                "MOSFET IRFZ44N": "MOSFET IRFZ44N",
+
+                "NE555 (Temporizador)": "NE555 (Temporizador)",
+                "LM7805 (Regulador 5V)": "LM7805 (Regulador 5V)",
+                "LM358 (Op-Amp)": "LM358 (Op-Amp)",
+                "ATmega328P (Micro)": "ATmega328P (Micro)",
+
+                "LED Rojo": "LED Rojo",
+                "LED Verde": "LED Verde",
+                "LED Azul": "LED Azul",
+                "LED Amarillo": "LED Amarillo",
+                "LED Blanco": "LED Blanco",
+
+                "Activo 5V": "Activo 5V",
+                "Activo 12V": "Activo 12V",
+                "Pasivo": "Pasivo",
+
+                "Cátodo Común": "Cátodo Común",
+                "Ánodo Común": "Ánodo Común",
+
+                "Normal Abierto (NO)": "Normal Abierto (NO)",
+
+                "Deslizante SPDT (1 polo, 2 tiros)":
+                    "Deslizante SPDT (1 polo, 2 tiros)",
+
+                "Pila 1.5V (AA/AAA)": "Pila 1.5V (AA/AAA)",
+                "Batería 9V": "Batería 9V",
+                "Pack 5V (USB)": "Pack 5V (USB)",
+                "Li-ion 3.7V": "Li-ion 3.7V",
+
+                "GND (Tierra)": "GND (Tierra)",
+
+                "Clema de tornillo (2 pines)": "Clema de tornillo (2 pines)",
+                "Pin Header macho (1x2)": "Pin Header macho (1x2)",
+                "Pin Header macho (1x4)": "Pin Header macho (1x4)",
+
+                "M2.5": "M2.5",
+                "M3": "M3",
+                "M4": "M4",
+            },
+
+            "en": {
+                "100 Ω": "100 Ω",
+                "220 Ω": "220 Ω",
+                "330 Ω": "330 Ω",
+                "1 KΩ": "1 KΩ",
+                "2.2 KΩ": "2.2 KΩ",
+                "4.7 KΩ": "4.7 KΩ",
+                "10 KΩ": "10 KΩ",
+                "47 KΩ": "47 KΩ",
+                "100 KΩ": "100 KΩ",
+
+                "10 pF": "10 pF",
+                "100 pF": "100 pF",
+                "1 nF": "1 nF",
+                "10 nF": "10 nF",
+                "100 nF": "100 nF",
+                "1 uF": "1 uF",
+                "10 uF": "10 uF",
+                "100 uF": "100 uF",
+
+                "10 μH": "10 μH",
+                "100 μH": "100 μH",
+                "1 mH": "1 mH",
+
+                "1N4148": "1N4148",
+                "1N4001": "1N4001",
+                "1N4007": "1N4007",
+                "1N5819": "1N5819",
+
+                "Zener 3.3V": "Zener 3.3V",
+                "Zener 5.1V": "Zener 5.1V",
+                "Zener 9.1V": "Zener 9.1V",
+                "Zener 12V": "Zener 12V",
+
+                "BC547 (NPN genérico)": "BC547 (generic NPN)",
+                "BC557 (PNP genérico)": "BC557 (generic PNP)",
+                "2N2222": "2N2222",
+                "2N3904": "2N3904",
+                "MOSFET IRFZ44N": "MOSFET IRFZ44N",
+
+                "NE555 (Temporizador)": "NE555 (Timer)",
+                "LM7805 (Regulador 5V)": "LM7805 (5V Regulator)",
+                "LM358 (Op-Amp)": "LM358 (Op-Amp)",
+                "ATmega328P (Micro)": "ATmega328P (Microcontroller)",
+
+                "LED Rojo": "Red LED",
+                "LED Verde": "Green LED",
+                "LED Azul": "Blue LED",
+                "LED Amarillo": "Yellow LED",
+                "LED Blanco": "White LED",
+
+                "Activo 5V": "Active 5V",
+                "Activo 12V": "Active 12V",
+                "Pasivo": "Passive",
+
+                "Cátodo Común": "Common Cathode",
+                "Ánodo Común": "Common Anode",
+
+                "Normal Abierto (NO)": "Normally Open (NO)",
+
+                "Deslizante SPDT (1 polo, 2 tiros)":
+                    "SPDT Slide Switch (1 pole, 2 throws)",
+
+                "Pila 1.5V (AA/AAA)": "1.5V Battery (AA/AAA)",
+                "Batería 9V": "9V Battery",
+                "Pack 5V (USB)": "5V Pack (USB)",
+                "Li-ion 3.7V": "Li-ion 3.7V",
+
+                "+5V": "+5V",
+                "+12V": "+12V",
+                "+3.3V": "+3.3V",
+                "GND (Tierra)": "GND (Ground)",
+
+                "Clema de tornillo (2 pines)": "Screw Terminal (2 pins)",
+                "Pin Header macho (1x2)": "Male Pin Header (1x2)",
+                "Pin Header macho (1x4)": "Male Pin Header (1x4)",
+
+                "M2.5": "M2.5",
+                "M3": "M3",
+                "M4": "M4",
+            },
+        }
+
+        lang = getattr(
+            self.scene(),
+            "lang",
+            "es"
+        ) if self.scene() else "es"
+
+        tipo_mostrado = traducciones_tipo.get(
+            lang,
+            traducciones_tipo["es"]
+        ).get(
             self.tipo,
             self.tipo
         )
 
-        self.label.setPlainText(
-            f"{self.ref_id}: {tipo_mostrado}\n{self.valor}"
+        valor_mostrado = traducciones_valor.get(
+            lang,
+            traducciones_valor["es"]
+        ).get(
+            self.valor,
+            self.valor
         )
 
-        self.label.setFont(QFont("sans-serif", 9, QFont.Bold))
+        self.label.setPlainText(
+            f"{self.ref_id}: {tipo_mostrado}\n{valor_mostrado}"
+        )
+
+        self.label.setFont(
+            QFont("sans-serif", 9, QFont.Bold)
+        )
 
         modo_oscuro = (
             getattr(self.scene(), "modo_oscuro", False)
@@ -338,21 +519,37 @@ class ComponenteLiviano(QGraphicsRectItem, BaseItemRotable):
             else False
         )
 
-        color_texto = QColor("#ffffff") if modo_oscuro else QColor("#000000")
-        color_pin = QColor("#67e8f9") if modo_oscuro else QColor("#0369a1")
+        color_texto = (
+            QColor("#ffffff")
+            if modo_oscuro
+            else QColor("#000000")
+        )
+
+        color_pin = (
+            QColor("#67e8f9")
+            if modo_oscuro
+            else QColor("#0369a1")
+        )
 
         self.label.setDefaultTextColor(color_texto)
 
-        for pin, lbl in zip(self.pines_logicos, self.pin_labels):
+        for pin, lbl in zip(
+            self.pines_logicos,
+            self.pin_labels
+        ):
             lbl.setPlainText(pin.nombre)
-            lbl.setFont(QFont("sans-serif", 9, QFont.Bold))
+            lbl.setFont(
+                QFont("sans-serif", 9, QFont.Bold)
+            )
             lbl.setDefaultTextColor(color_pin)
+
             self._posicionar_etiqueta_pin(
                 lbl,
                 pin,
                 self.rect().width(),
                 self.rect().height()
             )
+
             lbl.setZValue(35)
 
     def obtener_puntos_conexion(self):
