@@ -96,3 +96,18 @@ Each dependency remains subject to its own license and copyright terms.
 Contributions, bug reports, suggestions, documentation improvements, and educational feedback are welcome.
 
 Please use GitHub Issues or the project's Discord community to participate.
+
+## 🔐 Code signing policy
+
+KlinCAD aims to provide verifiable and trustworthy Windows releases.
+
+Free code signing provided by SignPath.io, certificate by SignPath Foundation.
+
+### Project roles
+
+- Committers and reviewers: KlinCAD project maintainers
+- Approvers: KlinCAD project maintainers
+
+### Privacy
+
+This program will not transfer any information to other networked systems unless specifically requested by the user or the person installing or operating it.
