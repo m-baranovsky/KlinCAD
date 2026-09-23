@@ -29,6 +29,8 @@ jobs:
       - name: Crear ejecutable
         run: >
           python -m PyInstaller
+          --clean
+          --noconfirm
           --onefile
           --windowed
           --icon=assets/icons/klincad.ico
