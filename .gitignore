@@ -1,1 +1,46 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
 
+# Entornos virtuales
+.venv/
+venv/
+env/
+ENV/
+
+# Pytest
+.pytest_cache/
+.coverage
+htmlcov/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+
+# Archivos temporales
+*.tmp
+*.temp
+*.bak
+*~
+
+# Compilación / distribución
+build/
+dist/
+*.egg-info/
+
+# Aplicación
+*.log
+
+# Proyectos locales de KlinCAD
+backup/
+
+# Archivos generados localmente
+*.klincad
