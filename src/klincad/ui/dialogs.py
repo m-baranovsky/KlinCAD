@@ -7,6 +7,7 @@ import sys
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import (
     QButtonGroup,
+    QCheckBox,
     QComboBox,
     QDialog,
     QFormLayout,
@@ -17,6 +18,7 @@ from PyQt5.QtWidgets import (
     QRadioButton,
     QTextEdit,
     QVBoxLayout,
+    QWidget,
 )
 
 from klincad.config import CAPAS_CONFIG
