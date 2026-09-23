@@ -1,0 +1,49 @@
+name: Build KlinCAD for Linux
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Descargar código
+        uses: actions/checkout@v4
+
+      - name: Instalar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Instalar KlinCAD
+        run: pip install -e .
+
+      - name: Instalar PyInstaller
+        run: pip install pyinstaller
+
+      - name: Verificar imports
+        run: |
+          python -c "from klincad.editor.window import EditorCircuito; print('Imports OK')"
+
+      - name: Crear ejecutable
+        run: >
+          python -m PyInstaller
+          --clean
+          --noconfirm
+          --onefile
+          --windowed
+          --name KlinCAD
+          src/klincad/app.py
+
+      - name: Generar SHA-256
+        run: |
+          sha256sum dist/KlinCAD > dist/KlinCAD.sha256
+
+      - name: Guardar ejecutable
+        uses: actions/upload-artifact@v4
+        with:
+          name: KlinCAD-Linux-x86_64
+          path: |
+            dist/KlinCAD
+            dist/KlinCAD.sha256
