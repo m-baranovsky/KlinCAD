@@ -2,8 +2,8 @@
 # KlinCAD - Pistas de PCB
 # =============================================================================
 
-from PyQt5.QtCore import QPointF, QLineF, Qt, QTransform
-from PyQt5.QtGui import QColor, QPainterPathStroker, QPen
+from PyQt5.QtCore import QPointF, QLineF, Qt
+from PyQt5.QtGui import QColor, QPainterPathStroker, QPen, QTransform
 from PyQt5.QtWidgets import (
     QGraphicsEllipseItem,
     QGraphicsItem,
