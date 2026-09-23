@@ -1122,10 +1122,26 @@ class EditorCircuito(QMainWindow):
             QMessageBox.critical(self, "Error al Abrir", f"Hubo un error al abrir el archivo:\n{str(e)}")
 
     def agregar_componente(self, categoria, valor):
-        centro = self.view.mapToScene(self.view.viewport().rect().center())
-        comp = ComponenteLiviano(centro.x(), centro.y(), categoria, valor)
+        centro = self.view.mapToScene(
+            self.view.viewport().rect().center()
+        )
+
+        comp = ComponenteLiviano(
+            centro.x(),
+            centro.y(),
+            categoria,
+            valor
+        )
+
         self.scene.addItem(comp)
+
+        # El componente ya pertenece a la escena, por lo que ahora
+        # puede consultar correctamente el idioma activo.
+        comp.actualizar_tooltip()
+        comp.actualizar_texto_etiqueta()
+
         self.scene.renumerar_componentes()
+        self.scene.actualizar_indicadores_conexion()
         self.guardar_estado()
         self.set_modo_puntero()
 
