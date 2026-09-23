@@ -1,0 +1,37 @@
+name: Build KlinCAD for Windows
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+
+    steps:
+      - name: Descargar código
+        uses: actions/checkout@v4
+
+      - name: Instalar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Instalar KlinCAD
+        run: pip install -e .
+
+      - name: Instalar PyInstaller
+        run: pip install pyinstaller
+
+      - name: Crear ejecutable
+        run: >
+          python -m PyInstaller
+          --onefile
+          --windowed
+          --name KlinCAD
+          src/klincad/app.py
+
+      - name: Guardar ejecutable
+        uses: actions/upload-artifact@v4
+        with:
+          name: KlinCAD-Windows
+          path: dist/KlinCAD.exe
