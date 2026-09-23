@@ -25,7 +25,7 @@ jobs:
       - name: Verificar imports
         run: |
           python -c "from klincad.editor.window import EditorCircuito; print('Imports OK')"
-
+      
       - name: Crear ejecutable
         run: >
           python -m PyInstaller
@@ -37,8 +37,16 @@ jobs:
           --name KlinCAD
           src/klincad/app.py
 
+      - name: Generar SHA-256
+        shell: powershell
+        run: |
+          $hash = (Get-FileHash "dist/KlinCAD.exe" -Algorithm SHA256).Hash
+          "$hash  KlinCAD.exe" | Out-File -FilePath "dist/KlinCAD.exe.sha256" -Encoding ascii
+
       - name: Guardar ejecutable
         uses: actions/upload-artifact@v4
         with:
           name: KlinCAD-Windows
-          path: dist/KlinCAD.exe
+          path: |
+            dist/KlinCAD.exe
+            dist/KlinCAD.exe.sha256
