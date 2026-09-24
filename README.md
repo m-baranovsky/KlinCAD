@@ -38,14 +38,14 @@ KlinCAD currently supports:
 
 ### Español
 
-- [Manual de usuario](docs/manual_es.md)
+### Español
+
+- [Manual de usuario](docs/es/manual_es.pdf)
 - [Arquitectura del proyecto](docs/arquitectura.md)
 
 ### English
 
-- [User Manual](docs/manual_en.md)
-
-> Additional documentation and downloadable PDF manuals will be published as they become available.
+- [User Manual](docs/en/manual_en.pdf)
 
 ## 📦 Download
 
