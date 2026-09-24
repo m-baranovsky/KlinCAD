@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>KlinCAD — Open-Source EDA for Education</title>
+
+    <meta
+        name="description"
+        content="KlinCAD is a lightweight open-source EDA tool for learning electronics, circuit design and PCB development."
+    >
+
+    <style>
+        :root {
+            --bg: #0b1020;
+            --bg-soft: #11182b;
+            --card: #151e33;
+            --border: #263451;
+            --text: #eef2ff;
+            --muted: #aab6d3;
+            --accent: #5ee7ff;
+            --accent-2: #7c8cff;
+            --max: 1120px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family:
+                Inter,
+                ui-sans-serif,
+                system-ui,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+            background:
+                radial-gradient(circle at top right, rgba(124, 140, 255, 0.12), transparent 35%),
+                radial-gradient(circle at top left, rgba(94, 231, 255, 0.08), transparent 30%),
+                var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .container {
+            width: min(calc(100% - 40px), var(--max));
+            margin: 0 auto;
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(14px);
+            background: rgba(11, 16, 32, 0.78);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        nav {
+            min-height: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+        }
+
+        .brand {
+            font-size: 1.3rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+        }
+
+        .brand span {
+            margin-left: 4px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 22px;
+            color: var(--muted);
+            font-size: 0.95rem;
+        }
+
+        .nav-links a:hover {
+            color: var(--text);
+        }
+
+        .hero {
+            padding: 110px 0 90px;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            align-items: center;
+            gap: 70px;
+        }
+
+        .eyebrow {
+            display: inline-block;
+            margin-bottom: 18px;
+            color: var(--accent);
+            font-size: 0.9rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            font-size: clamp(3.2rem, 8vw, 6rem);
+            line-height: 0.95;
+            letter-spacing: -0.06em;
+            margin-bottom: 24px;
+        }
+
+        .hero p {
+            max-width: 700px;
+            font-size: 1.15rem;
+            color: var(--muted);
+            margin-bottom: 30px;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+        }
+
+        .button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 48px;
+            padding: 0 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            font-weight: 700;
+            transition:
+                transform 0.2s ease,
+                border-color 0.2s ease,
+                background 0.2s ease;
+        }
+
+        .button:hover {
+            transform: translateY(-2px);
+            border-color: #43567f;
+        }
+
+        .button-primary {
+            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+            color: #08101f;
+            border-color: transparent;
+        }
+
+        .button-secondary {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .hero-card {
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255, 255, 255, 0.06),
+                    rgba(255, 255, 255, 0.02)
+                );
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 28px;
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.28);
+        }
+
+        .hero-card-title {
+            font-weight: 800;
+            margin-bottom: 18px;
+        }
+
+        .terminal {
+            font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+            font-size: 0.9rem;
+            color: #cbd5e1;
+            background: #080d19;
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid #1b2741;
+            overflow-x: auto;
+        }
+
+        .terminal .prompt {
+            color: var(--accent);
+        }
+
+        section {
+            padding: 80px 0;
+        }
+
+        section h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            letter-spacing: -0.04em;
+            margin-bottom: 14px;
+        }
+
+        .section-intro {
+            max-width: 720px;
+            color: var(--muted);
+            margin-bottom: 34px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.025);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 24px;
+        }
+
+        .card h3 {
+            margin-bottom: 10px;
+            font-size: 1.05rem;
+        }
+
+        .card p {
+            color: var(--muted);
+            font-size: 0.96rem;
+        }
+
+        .download-box {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+
+        .download-card {
+            background: linear-gradient(
+                145deg,
+                rgba(255, 255, 255, 0.045),
+                rgba(255, 255, 255, 0.02)
+            );
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 28px;
+        }
+
+        .download-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 8px;
+        }
+
+        .download-card p {
+            color: var(--muted);
+            margin-bottom: 20px;
+        }
+
+        .meta {
+            margin-top: 14px;
+            font-size: 0.84rem;
+            color: #8794b5;
+        }
+
+        .links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .link-chip {
+            padding: 10px 14px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            color: var(--muted);
+            background: rgba(255, 255, 255, 0.025);
+        }
+
+        .link-chip:hover {
+            color: var(--text);
+            border-color: #43567f;
+        }
+
+        .status {
+            display: inline-block;
+            margin-bottom: 18px;
+            padding: 7px 12px;
+            border-radius: 999px;
+            background: rgba(94, 231, 255, 0.08);
+            border: 1px solid rgba(94, 231, 255, 0.18);
+            color: var(--accent);
+            font-size: 0.86rem;
+            font-weight: 700;
+        }
+
+        footer {
+            padding: 40px 0 60px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        .footer-inner {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 18px;
+        }
+
+        @media (max-width: 900px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .download-box {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+
+        @media (max-width: 620px) {
+            .container {
+                width: min(calc(100% - 28px), var(--max));
+            }
+
+            .hero {
+                padding: 80px 0 70px;
+            }
+
+            section {
+                padding: 60px 0;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 3.6rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="container">
+        <nav>
+            <a class="brand" href="#top">KlinCAD <span>⚡</span></a>
+
+            <div class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#downloads">Downloads</a>
+                <a href="#documentation">Documentation</a>
+                <a href="#community">Community</a>
+            </div>
+        </nav>
+    </div>
+</header>
+
+<main id="top">
+
+    <section class="hero">
+        <div class="container hero-grid">
+
+            <div>
+                <div class="eyebrow">Open-source EDA · Education</div>
+
+                <h1>KlinCAD</h1>
+
+                <p>
+                    A lightweight electronic design automation tool for
+                    learning electronics, designing circuits and working
+                    with PCBs without the complexity of professional EDA suites.
+                </p>
+
+                <div class="hero-actions">
+                    <a
+                        class="button button-primary"
+                        href="https://github.com/m-baranovsky/KlinCAD/releases/latest"
+                    >
+                        Download KlinCAD
+                    </a>
+
+                    <a
+                        class="button button-secondary"
+                        href="https://github.com/m-baranovsky/KlinCAD"
+                    >
+                        View on GitHub
+                    </a>
+                </div>
+            </div>
+
+            <div class="hero-card">
+                <div class="hero-card-title">
+                    Built for learning electronics
+                </div>
+
+                <div class="terminal">
+                    <div><span class="prompt">$</span> KlinCAD</div>
+                    <br>
+                    <div>PCB design</div>
+                    <div>Interactive editing</div>
+                    <div>Component library</div>
+                    <div>Design-rule checking</div>
+                    <div>Spanish / English interface</div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="features">
+        <div class="container">
+
+            <h2>Designed to make electronics approachable</h2>
+
+            <p class="section-intro">
+                KlinCAD focuses on reducing unnecessary complexity so students,
+                teachers and beginners can concentrate on understanding electronics
+                and circuit design.
+            </p>
+
+            <div class="grid">
+
+                <article class="card">
+                    <h3>PCB design</h3>
+                    <p>
+                        Design and route PCBs in an interactive environment.
+                    </p>
+                </article>
+
+                <article class="card">
+                    <h3>Component workflow</h3>
+                    <p>
+                        Select, place and work with electronic components intuitively.
+                    </p>
+                </article>
+
+                <article class="card">
+                    <h3>Multi-layer boards</h3>
+                    <p>
+                        Work with multiple PCB layers for more advanced designs.
+                    </p>
+                </article>
+
+                <article class="card">
+                    <h3>Design-rule checking</h3>
+                    <p>
+                        Use built-in tools to identify potential design problems.
+                    </p>
+                </article>
+
+                <article class="card">
+                    <h3>Spanish & English</h3>
+                    <p>
+                        An interface designed to be accessible to users in both languages.
+                    </p>
+                </article>
+
+                <article class="card">
+                    <h3>Open source</h3>
+                    <p>
+                        The source code is public and released under the GNU GPL v3.0.
+                    </p>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="downloads">
+        <div class="container">
+
+            <div class="status">Current release · 0.1.0 Beta 2</div>
+
+            <h2>Download</h2>
+
+            <p class="section-intro">
+                Get the latest version of KlinCAD from GitHub Releases.
+                Windows and Linux builds are available.
+            </p>
+
+            <div class="download-box">
+
+                <article class="download-card">
+                    <h3>Windows</h3>
+                    <p>
+                        Download the latest Windows build as a ready-to-run executable.
+                    </p>
+
+                    <a
+                        class="button button-primary"
+                        href="https://github.com/m-baranovsky/KlinCAD/releases/latest"
+                    >
+                        Download for Windows
+                    </a>
+
+                    <div class="meta">
+                        SHA-256 verification file included in the release.
+                    </div>
+                </article>
+
+                <article class="download-card">
+                    <h3>Linux</h3>
+                    <p>
+                        Download the latest Linux build and installation script.
+                    </p>
+
+                    <a
+                        class="button button-primary"
+                        href="https://github.com/m-baranovsky/KlinCAD/releases/latest"
+                    >
+                        Download for Linux
+                    </a>
+
+                    <div class="meta">
+                        SHA-256 verification file and install script included.
+                    </div>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="documentation">
+        <div class="container">
+
+            <h2>Documentation</h2>
+
+            <p class="section-intro">
+                Learn how to use KlinCAD, understand the project architecture
+<section id="documentation">
+    <div class="container">
+
+        <h2>Documentation</h2>
+
+        <p class="section-intro">
+            User manuals, project documentation and development resources
+            for KlinCAD.
+        </p>
+
+        <div class="links">
+
+            <a
+                class="link-chip"
+                href="https://github.com/m-baranovsky/KlinCAD/tree/main/docs"
+            >
+                Documentation
+            </a>
+
+            <a
+                class="link-chip"
+                href="https://github.com/m-baranovsky/KlinCAD"
+            >
+                Source code
+            </a>
+
+            <a
+                class="link-chip"
+                href="https://github.com/m-baranovsky/KlinCAD/issues"
+            >
+                Issues & Bug Reports
+            </a>
+
+        </div>
+
+    </div>
+</section>
+          
+    <section id="community">
+        <div class="container">
+
+            <h2>Community</h2>
+
+            <p class="section-intro">
+                Test early versions, report bugs, suggest improvements
+                and follow KlinCAD's development.
+            </p>
+
+            <div class="links">
+
+                <a
+                    class="link-chip"
+                    href="https://github.com/m-baranovsky/KlinCAD/issues"
+                >
+                    GitHub Issues
+                </a>
+
+                <a
+                    class="link-chip"
+                    href="https://discord.gg/2A5P6KV3qA"
+                >
+                    Discord
+                </a>
+
+                <a
+                    class="link-chip"
+                    href="https://github.com/m-baranovsky/KlinCAD/releases/latest"
+                >
+                    Latest Release
+                </a>
+
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    <div class="container footer-inner">
+
+        <div>
+            <strong>KlinCAD ⚡</strong><br>
+            Open-source EDA software for education.
+        </div>
+
+        <div>
+            GNU GPL-3.0 ·
+            <a href="https://github.com/m-baranovsky/KlinCAD">
+                GitHub
+            </a>
+        </div>
+
+    </div>
+</footer>
+
+</body>
+</html>
