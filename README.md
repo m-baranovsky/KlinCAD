@@ -49,19 +49,19 @@ KlinCAD currently supports:
 
 ## 📦 Download
 
-The Windows application is distributed through GitHub Releases.
+KlinCAD is available for **Windows and Linux** through GitHub Releases.
 
-➡️ [Download KlinCAD](../../releases)
+➡️ [Download the latest release](https://github.com/m-baranovsky/KlinCAD/releases/latest)
 
 Source code is available directly in this repository.
 
 ## 🚧 Project status
 
-**KlinCAD is under active development.**
+**KlinCAD is currently in beta and under active development.**
 
 The project is evolving continuously, with new features, improvements, fixes, and educational resources being added over time.
 
-Early releases may contain bugs or incomplete functionality.
+Beta releases may contain bugs or incomplete functionality.
 
 ## 🤝 Community
 
@@ -77,7 +77,7 @@ KlinCAD is developed as an open-source project using Python and PyQt5.
 
 The repository is organized into modular components to make the project easier to maintain, test, and contribute to.
 
-See [Desarrollo](docs/desarrollo.md) for development guidelines.
+See [Development](docs/desarrollo.md) for development guidelines.
 
 ## 📄 License
 
@@ -96,18 +96,3 @@ Each dependency remains subject to its own license and copyright terms.
 Contributions, bug reports, suggestions, documentation improvements, and educational feedback are welcome.
 
 Please use GitHub Issues or the project's Discord community to participate.
-
-## 🔐 Code signing policy
-
-KlinCAD aims to provide verifiable and trustworthy Windows releases.
-
-Free code signing provided by SignPath.io, certificate by SignPath Foundation.
-
-### Project roles
-
-- Committers and reviewers: KlinCAD project maintainers
-- Approvers: KlinCAD project maintainers
-
-### Privacy
-
-This program will not transfer any information to other networked systems unless specifically requested by the user or the person installing or operating it.
