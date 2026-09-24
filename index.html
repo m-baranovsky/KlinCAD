@@ -14,7 +14,6 @@
     <style>
         :root {
             --bg: #0b1020;
-            --bg-soft: #11182b;
             --card: #151e33;
             --border: #263451;
             --text: #eef2ff;
@@ -44,8 +43,16 @@
                 "Segoe UI",
                 sans-serif;
             background:
-                radial-gradient(circle at top right, rgba(124, 140, 255, 0.12), transparent 35%),
-                radial-gradient(circle at top left, rgba(94, 231, 255, 0.08), transparent 30%),
+                radial-gradient(
+                    circle at top right,
+                    rgba(124, 140, 255, 0.12),
+                    transparent 35%
+                ),
+                radial-gradient(
+                    circle at top left,
+                    rgba(94, 231, 255, 0.08),
+                    transparent 30%
+                ),
                 var(--bg);
             color: var(--text);
             line-height: 1.6;
@@ -161,7 +168,11 @@
         }
 
         .button-primary {
-            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+            background: linear-gradient(
+                135deg,
+                var(--accent),
+                var(--accent-2)
+            );
             color: #08101f;
             border-color: transparent;
         }
@@ -189,7 +200,11 @@
         }
 
         .terminal {
-            font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+            font-family:
+                "SFMono-Regular",
+                Consolas,
+                "Liberation Mono",
+                monospace;
             font-size: 0.9rem;
             color: #cbd5e1;
             background: #080d19;
@@ -249,11 +264,12 @@
         }
 
         .download-card {
-            background: linear-gradient(
-                145deg,
-                rgba(255, 255, 255, 0.045),
-                rgba(255, 255, 255, 0.02)
-            );
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255, 255, 255, 0.045),
+                    rgba(255, 255, 255, 0.02)
+                );
             border: 1px solid var(--border);
             border-radius: 20px;
             padding: 28px;
@@ -369,7 +385,9 @@
 <header>
     <div class="container">
         <nav>
-            <a class="brand" href="#top">KlinCAD <span>⚡</span></a>
+            <a class="brand" href="#top">
+                KlinCAD <span>⚡</span>
+            </a>
 
             <div class="nav-links">
                 <a href="#features">Features</a>
@@ -383,11 +401,14 @@
 
 <main id="top">
 
+    <!-- HERO -->
     <section class="hero">
         <div class="container hero-grid">
 
             <div>
-                <div class="eyebrow">Open-source EDA · Education</div>
+                <div class="eyebrow">
+                    Open-source EDA · Education
+                </div>
 
                 <h1>KlinCAD</h1>
 
@@ -398,6 +419,7 @@
                 </p>
 
                 <div class="hero-actions">
+
                     <a
                         class="button button-primary"
                         href="https://github.com/m-baranovsky/KlinCAD/releases/latest"
@@ -411,28 +433,39 @@
                     >
                         View on GitHub
                     </a>
+
                 </div>
             </div>
 
             <div class="hero-card">
+
                 <div class="hero-card-title">
                     Built for learning electronics
                 </div>
 
                 <div class="terminal">
-                    <div><span class="prompt">$</span> KlinCAD</div>
+
+                    <div>
+                        <span class="prompt">$</span> KlinCAD
+                    </div>
+
                     <br>
+
                     <div>PCB design</div>
                     <div>Interactive editing</div>
                     <div>Component library</div>
                     <div>Design-rule checking</div>
                     <div>Spanish / English interface</div>
+
                 </div>
+
             </div>
 
         </div>
     </section>
 
+
+    <!-- FEATURES -->
     <section id="features">
         <div class="container">
 
@@ -489,13 +522,18 @@
                 </article>
 
             </div>
+
         </div>
     </section>
 
+
+    <!-- DOWNLOADS -->
     <section id="downloads">
         <div class="container">
 
-            <div class="status">Current release · 0.1.0 Beta 2</div>
+            <div class="status">
+                Current release · 0.1.0 Beta 2
+            </div>
 
             <h2>Download</h2>
 
@@ -507,9 +545,12 @@
             <div class="download-box">
 
                 <article class="download-card">
+
                     <h3>Windows</h3>
+
                     <p>
-                        Download the latest Windows build as a ready-to-run executable.
+                        Download the latest Windows build as a
+                        ready-to-run executable.
                     </p>
 
                     <a
@@ -522,12 +563,17 @@
                     <div class="meta">
                         SHA-256 verification file included in the release.
                     </div>
+
                 </article>
 
+
                 <article class="download-card">
+
                     <h3>Linux</h3>
+
                     <p>
-                        Download the latest Linux build and installation script.
+                        Download the latest Linux build and
+                        installation script.
                     </p>
 
                     <a
@@ -540,94 +586,70 @@
                     <div class="meta">
                         SHA-256 verification file and install script included.
                     </div>
+
                 </article>
 
             </div>
+
         </div>
     </section>
 
+
+    <!-- DOCUMENTATION -->
     <section id="documentation">
         <div class="container">
 
             <h2>Documentation</h2>
 
             <p class="section-intro">
-                Learn how to use KlinCAD, understand the project architecture
-<section id="documentation">
-    <div class="container">
-
-        <h2>Documentation</h2>
-
-        <p class="section-intro">
-            User manuals, project documentation and development resources
-            for KlinCAD.
-        </p>
-
-        <div class="links">
-
-            <a
-                class="link-chip"
-                href="https://github.com/m-baranovsky/KlinCAD/tree/main/docs"
-            >
-                Documentation
-            </a>
-
-            <a
-                class="link-chip"
-                href="https://github.com/m-baranovsky/KlinCAD"
-            >
-                Source code
-            </a>
-
-            <a
-                class="link-chip"
-                href="https://github.com/m-baranovsky/KlinCAD/issues"
-            >
-                Issues & Bug Reports
-            </a>
-
-        </div>
-
-    </div>
-</section>
-        <div class="container">
-
-            <h2>Community</h2>
-
-            <p class="section-intro">
-                Test early versions, report bugs, suggest improvements
-                and follow KlinCAD's development.
+                User manuals, project documentation and development resources
+                for KlinCAD.
             </p>
 
             <div class="links">
 
                 <a
                     class="link-chip"
-                    href="https://github.com/m-baranovsky/KlinCAD/issues"
+                    href="https://github.com/m-baranovsky/KlinCAD/tree/main/docs"
                 >
-                    GitHub Issues
+                    Documentation
                 </a>
+
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- COMMUNITY -->
+    <section id="community">
+        <div class="container">
+
+            <h2>Community</h2>
+
+            <p class="section-intro">
+                Join the KlinCAD community to follow the project,
+                discuss electronics, share feedback and connect with other users.
+            </p>
+
+            <div class="links">
 
                 <a
                     class="link-chip"
                     href="https://discord.gg/2A5P6KV3qA"
                 >
-                    Discord
-                </a>
-
-                <a
-                    class="link-chip"
-                    href="https://github.com/m-baranovsky/KlinCAD/releases/latest"
-                >
-                    Latest Release
+                    Join the KlinCAD Discord
                 </a>
 
             </div>
+
         </div>
     </section>
 
 </main>
 
+
+<!-- FOOTER -->
 <footer>
     <div class="container footer-inner">
 
