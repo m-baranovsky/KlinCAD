@@ -46,7 +46,7 @@ KlinCAD currently supports:
 - [User Manual](docs/en/manual_en.pdf)
 
 ## 🌐 Project website:
-[Download the latest release](https://m-baranovsky.github.io/KlinCAD/)
+[KlinCAD Website](https://m-baranovsky.github.io/KlinCAD/)
 
 ## 📦 Download
 
