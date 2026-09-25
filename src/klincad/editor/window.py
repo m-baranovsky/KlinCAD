@@ -1159,24 +1159,51 @@ class EditorCircuito(QMainWindow):
         self.set_proyecto_activo(True)
 
     # El formato .klincad es JSON legible para facilitar depuración y colaboración.
-    def guardar_proyecto(self):
-        if not self.proyecto_activo:
-            return
-        path, _ = QFileDialog.getSaveFileName(self, "Guardar Proyecto KlinCAD", "", "KlinCAD Project (*.klincad);;JSON (*.json)")
-        if not path: return
-        
-        if not path.endswith('.klincad') and not path.endswith('.json'):
-            path += '.klincad'
-            
-        try:
-            data = json.loads(self.serializar_escena())
-            with open(path, 'w', encoding='utf-8') as f:
-                json.dump(data, f, indent=4, ensure_ascii=False)
-            self.archivo_actual = path
-            QMessageBox.information(self, "Guardado", "Proyecto guardado con éxito.")
-        except Exception as e:
-            QMessageBox.critical(self, "Error al Guardar", f"Hubo un error al guardar el archivo:\n{str(e)}")
+def guardar_proyecto(self):
+    if not self.proyecto_activo:
+        return
 
+    options = QFileDialog.Options()
+
+    # En Linux evitamos el diálogo nativo del escritorio,
+    # ya que puede provocar cierres al escribir el nombre del archivo.
+    if sys.platform.startswith("linux"):
+        options |= QFileDialog.DontUseNativeDialog
+
+    path, _ = QFileDialog.getSaveFileName(
+        self,
+        "Guardar Proyecto KlinCAD",
+        "",
+        "KlinCAD Project (*.klincad);;JSON (*.json)",
+        options=options
+    )
+
+    if not path:
+        return
+
+    if not path.endswith(".klincad") and not path.endswith(".json"):
+        path += ".klincad"
+
+    try:
+        data = json.loads(self.serializar_escena())
+
+        with open(path, "w", encoding="utf-8") as f:
+            json.dump(data, f, indent=4, ensure_ascii=False)
+
+        self.archivo_actual = path
+
+        QMessageBox.information(
+            self,
+            "Guardado",
+            "Proyecto guardado con éxito."
+        )
+
+    except Exception as e:
+        QMessageBox.critical(
+            self,
+            "Error al Guardar",
+            f"Hubo un error al guardar el archivo:\n{str(e)}"
+        )
     # Carga datos JSON y solo activa el proyecto cuando toda la reconstrucción termina.
     def abrir_proyecto(self):
         path, _ = QFileDialog.getOpenFileName(self, "Abrir Proyecto KlinCAD", "", "KlinCAD Project (*.klincad);;JSON (*.json)")
